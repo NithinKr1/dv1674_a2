@@ -46,7 +46,7 @@ namespace Dataset
         return result;
     }
 
-    void write(std::vector<double> data, std::string filename)
+    void write(const std::vector<double>& data, std::string filename)
     {
         std::ofstream f{};
 
@@ -58,7 +58,8 @@ namespace Dataset
             return;
         }
 
-        for (auto i{0}; i < data.size(); i++)
+        // Use std::vector<double>::size_type to avoid signed/unsigned comparison warnings
+        for (std::vector<double>::size_type i = 0; i < data.size(); i++)
         {
             f << std::setprecision(std::numeric_limits<double>::digits10 + 1) << data[i] << std::endl;
         }

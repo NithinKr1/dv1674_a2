@@ -3,7 +3,10 @@
 CXX=g++
 CXXFLAGS=-std=c++17 -g -Wunused -Wall -Wunused
 
-all: blur
+all: blur threshold
+
+threshold: matrix ppm filters threshold.cpp
+	$(CXX) $(CXXFLAGS) threshold.cpp matrix.o ppm.o filters.o -o threshold
 
 blur: matrix ppm filters blur.cpp
 	$(CXX) $(CXXFLAGS) blur.cpp matrix.o ppm.o filters.o -o blur
@@ -18,4 +21,4 @@ ppm: ppm.hpp ppm.cpp
 	$(CXX) $(CXXFLAGS) -c ppm.cpp -o ppm.o
 
 clean:
-	rm -rf blur *.ppm *.o *.dSYM 2> /dev/null
+	rm -rf blur threshold *.ppm *.o *.dSYM 2> /dev/null
