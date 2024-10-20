@@ -64,7 +64,7 @@ do
 
         # Run the blur program and capture its PID
         echo "Running blur for file $FILE with radius $RADIUS..."
-        ./blur $RADIUS "./data/$FILE" "./data/$OUTPUT_FILE" &
+        ./blur $RADIUS "./data/$FILE" "./data_o/$OUTPUT_FILE" &
         BLUR_PID=$!
 
         # Start monitoring the blur process

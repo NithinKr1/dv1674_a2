@@ -80,7 +80,7 @@ std::tuple<unsigned char*, unsigned char*, unsigned char*> Reader::get_data(unsi
     auto size { x_size * y_size };
     auto R { new char[size] }, G { new char[size] }, B { new char[size] };
 
-    for (auto i { 0 }, read { 0 }; i < size; i++, read = 0) {
+    for (unsigned int i { 0 }, read { 0 }; i < size; i++, read = 0) {
         stream.read(R + i, 1);
         read += stream.gcount();
         stream.read(G + i, 1);
@@ -140,7 +140,7 @@ Matrix Reader::operator()(std::string filename)
 
         stream.clear();
         return Matrix { R, G, B, x_size, y_size, color_max };
-    } catch (std::runtime_error e) {
+    } catch (const std::runtime_error& e) {
         error("reading", e.what());
         stream.clear();
         return Matrix {};
@@ -179,7 +179,7 @@ void Writer::operator()(Matrix m, std::string filename)
         }
 
         f.close();
-    } catch (std::runtime_error e) {
+    } catch (const std::runtime_error& e) {
         error("writing", e.what());
     }
 }
