@@ -1,44 +1,44 @@
 /*
-Author: David Holmqvist <daae19@student.bth.se>
-*/
+ * Author: David Holmqvist <daae19@student.bth.se>
+ */
 
 #include "vector.hpp"
-#include <iostream>
 #include <cmath>
-#include <vector>
+#include <algorithm>
+#include <numeric>
 
-Vector::Vector()
-    : size{0}, data{nullptr}
+Vector::Vector() : size(0), data(nullptr) {}
+
+Vector::Vector(unsigned size) : size(size), data(new doublesize) {}
+
+Vector::Vector(unsigned size, double* data) : size(size), data(new double[size])
 {
+    std::copy(data, data + size, this->data);
+}
+
+Vector::Vector(const Vector& other) : size(other.size), data(new double[other.size])
+{
+    std::copy(other.data, other.data + other.size, data);
 }
 
 Vector::~Vector()
 {
-    if (data)
-    {
-        delete[] data;
-    }
-
-    size = 0;
+    delete[] data;
 }
 
-Vector::Vector(unsigned size)
-    : size{size}, data{new double[size]}
+double Vector::magnitude() const
 {
+    return std::sqrt(std::inner_product(data, data + size, data, 0.0));
 }
 
-Vector::Vector(unsigned size, double *data)
-    : size{size}, data{data}
+double Vector::mean() const
 {
+    return std::accumulate(data, data + size, 0.0) / size;
 }
 
-Vector::Vector(const Vector &other)
-    : Vector{other.size}
+double Vector::dot(Vector rhs) const
 {
-    for (auto i{0}; i < size; i++)
-    {
-        data[i] = other.data[i];
-    }
+    return std::inner_product(data, data + size, rhs.data, 0.0);
 }
 
 unsigned Vector::get_size() const
@@ -46,71 +46,31 @@ unsigned Vector::get_size() const
     return size;
 }
 
-double *Vector::get_data()
+double* Vector::get_data()
 {
     return data;
 }
 
-double Vector::operator[](unsigned i) const
-{
-    return data[i];
-}
-
-double &Vector::operator[](unsigned i)
-{
-    return data[i];
-}
-
-double Vector::mean() const
-{
-    double sum{0};
-
-    for (auto i{0}; i < size; i++)
-    {
-        sum += data[i];
-    }
-
-    return sum / static_cast<double>(size);
-}
-
-double Vector::magnitude() const
-{
-    auto dot_prod{dot(*this)};
-    return std::sqrt(dot_prod);
-}
-
 Vector Vector::operator/(double div)
 {
-    auto result{*this};
-
-    for (auto i{0}; i < size; i++)
-    {
-        result[i] /= div;
-    }
-
+    Vector result(size);
+    std::transform(data, data + size, result.data, div { return val / div; });
     return result;
 }
 
 Vector Vector::operator-(double sub)
 {
-    auto result{*this};
-
-    for (auto i{0}; i < size; i++)
-    {
-        result[i] -= sub;
-    }
-
+    Vector result(size);
+    std::transform(data, data + size, result.data, sub { return val - sub; });
     return result;
 }
 
-double Vector::dot(Vector rhs) const
+double Vector::operator const
 {
-    double result{0};
+    return data[i];
+}
 
-    for (auto i{0}; i < size; i++)
-    {
-        result += data[i] * rhs[i];
-    }
-
-    return result;
+double& Vector::operator
+{
+    return data[i];
 }

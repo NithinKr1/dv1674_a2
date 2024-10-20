@@ -1,0 +1,41 @@
+Didnt ran blur's callgrind to im3.ppm and im4 properly due to extreme time taken
+
+Ran the pearson valgrind and got the result on it's makefile folder itself
+
+VMSTATS BASE LINE PERFORMANCE TIME
+DONT FORGET to create data from vmstat data
+NOW vmstating 
+BLUR
+im1[size:1,512 KB] [RES:676x763]
+im1 r1 took 1 second
+im1 r100 - 3 second
+im1 r500 - 15 second | in Native Arch linux:  13
+im1 r900 - 22 second | 20
+
+im2[size:3,073 KB] [RES:1024x1024]
+im2 r1 - 1 second
+im2 r100 - 8 second  | 7
+im2 r500 - 31 second | 29
+im2 r900 - 51 second | 46
+
+im3[size:5,626 KB][RES:1600x1200]
+im3 r1 - 2 second    | 1
+im3 r100 - 15 second | 14
+im3 r500 - 62 second | 57
+im3 r900 - 104 second| 84
+
+im4[size:26,338 KB][RES:3000x3000]
+im4 r1 - 6 second    |5
+im4 r100 - 71 second |62
+im4 r500 - 304 second|283
+im4 r900 - 547 second|471
+
+
+
+
+Now vmstating for pearson
+
+128 data - 1 second
+256 data - 5 seconds
+512 data - 20 second
+1024 data - 89 seconds
